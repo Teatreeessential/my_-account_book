@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="net.myapp.mapper.AccessDAO">
+	
+	
+
+	<resultMap type="net.myapp.domain.MemberVO" id="memberMap">
+		<result property="id" column="id"/>
+		<result property="passwd" column="passwd"/>
+		<result property="sex" column="sex"/>
+		<result property="access_token" column="access_token"/>
+		<collection property="fintech_use_nums" resultMap="fintechMap">
+		</collection>
+	</resultMap>
+	
+	
+	<resultMap type="String" id="fintechMap">
+		<result property="fintech_use_num" column="fintech_use_num"/>
+	</resultMap>
+	
+
+ 	<!-- 은행명 토큰값 등을 받아오는 곳 -->	
+	<select id="getMember" parameterType="hashmap"  resultMap="memberMap">
+		select mem.id,mem.sex,mem.access_token,fin.fintech_use_num
+		from  
+		(select * from tbl_member where id=#{id} and passwd=#{passwd}) mem, tbl_fintechnum fin
+		where mem.id = fin.id
+	</select>
+    
+   
+</mapper>
