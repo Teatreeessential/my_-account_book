@@ -38,6 +38,9 @@ public class MockTest {
 						.param("id", "abc")
 						.param("passwd", "1111")
 						).andReturn();
+			while(true) {
+				
+			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

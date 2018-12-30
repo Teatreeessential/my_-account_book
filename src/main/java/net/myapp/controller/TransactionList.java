@@ -29,18 +29,20 @@ public class TransactionList implements Runnable {
 	
 	@Setter(onMethod_=@Autowired)
 	private CacheManager cacheManager;
-	private String fintech_use_num;
 	private Cache cache;
+	private String fintech_use_num;
+	
 	private String access_token;
 	
 	//json 데이터 파싱 및 java객체 변환 시 사용
-	JsonParser parser = new JsonParser();
-	Gson gson = new Gson();
-	TranDate tran = new TranDate();
+	
 	
 	
 	@Override
 	public void run() {
+		JsonParser parser = new JsonParser();
+		Gson gson = new Gson();
+		TranDate tran = new TranDate();
 		cache = cacheManager.getCache("sampleCache");
 		RestTemplate rest = new RestTemplate();
 		List<TransactionVO> list = new ArrayList<>();
@@ -125,8 +127,7 @@ public class TransactionList implements Runnable {
 		cache.put(fintech_use_num+"income_map", income_map);
 		cache.put(fintech_use_num+"branch_map", branch_map);
 	
-	
-		
+
 	}
 
 }

@@ -26,15 +26,7 @@ public class TestCache {
 		public void live() throws InterruptedException{ 
 			 cache = cacheManager.getCache("sampleCache");
 			
-			cache.put("title", "cache.............");
-			
-			
-	
-			
-			System.out.println(cache.get("title").get());
-			System.out.println(cache.get("title").get());
-			System.out.println(cache.get("title").get());
-			System.out.println(cache.get("title").get());
+			 System.out.println(cache.get("dsadasd")==null);
 			
 		}
 		@Test

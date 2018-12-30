@@ -26,17 +26,20 @@ import net.myapp.domain.TransactionVO;
 public class BalanceList implements Runnable {
 	@Setter(onMethod_=@Autowired)
 	private CacheManager cacheManager;
+	@Setter(onMethod_=@Autowired)
+	private DataHandler datahandler;
 	private Cache cache;
 	private String fintech_use_num;
 	private String access_token;
 	
 	//json 데이터 파싱 및 java객체 변환 시 사용
-	JsonParser parser = new JsonParser();
-	Gson gson = new Gson();
-	TranDate tran = new TranDate();
+	
 	
 	@Override
 	public void run() {
+		JsonParser parser = new JsonParser();
+		Gson gson = new Gson();
+		TranDate tran = new TranDate();
 		cache = cacheManager.getCache("sampleCache");
 		RestTemplate rest = new RestTemplate();
 		List<TransactionVO> list = new ArrayList<>();
@@ -59,8 +62,13 @@ public class BalanceList implements Runnable {
 		
 		BalanceVO balance = gson.fromJson(json.toString(), BalanceVO.class);
 		
+		balance.setAccount_type(datahandler.balanceType(Integer.parseInt(balance.getAccount_type())));
+		balance.setBank_code_tran(datahandler.bankName(Integer.parseInt(balance.getBank_code_tran())));
+		
+		
 		cache.put(fintech_use_num+"balance", balance);
 		
+
 	}
 
 }
